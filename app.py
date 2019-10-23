@@ -1,0 +1,96 @@
+import os
+
+#Flask Imports 
+from flask import Flask, jsonify, request
+from flask_restful import Api, reqparse
+from flask_cors import CORS
+
+# Local imports
+from .models import db, Modis
+from .functions import (
+    pull_modis, 
+    process_live_data, 
+    add_training_data, 
+    haversine
+)
+
+
+def create_app():
+    """
+    Creates and configures an instance of our Flask API
+    """
+    app = Flask(__name__)
+    app.run(debug=True)
+    # create db first
+
+    # configure database variables
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["ENV"] = os.environ.get(
+        "ENV"
+    )  # apparently this doesn't really work so commenting out for now
+
+    app.app_context().push()
+    db.init_app(app)
+
+    # enable CORS on all app routes
+    CORS(app)
+
+    # initialize the api wrapper
+    api = Api(app)
+
+    @app.route("/create_db", methods=["POST"])
+    def create_db():
+        values = request.get_json()
+        # expecting a json {'reset' : True, 'password' : 'ballderdash'}
+
+        if values["reset"] == True and values["password"] == "ballderdash":
+            print("creating db")
+            db.create_all()
+
+            return jsonify(
+                {"error": False, "message": "db created successfully", "time": time_now}
+            )
+
+        else:
+            return jsonify(
+                {
+                    "error": True,
+                    "message": "either auth failed or reset was not enabled",
+                    "time": time_now,
+                }
+            )
+
+    
+    @app.route("/update_db", methods=["GET"])
+    def update_db():
+        try:
+            # Get new data and clean it
+            dirty_data = pull_modis()
+            clean_data = process_live_data(dirty_data)
+
+            # Add data to db
+            add_training_data(clean_data)
+        
+        except:
+            return jsonify({"error": True, "message": "something happened"})
+
+
+    return app
+
+
+
+
+
+# from service import
+# @app.route('/')
+# def hello():
+#   return "Hello World!"
+
+# if __name__ == "__main__":
+#   Schema()
+#   app.run(debug=True)
+
+# @app.route("/todo", method=["POST"])
+
+
