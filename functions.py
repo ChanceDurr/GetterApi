@@ -10,17 +10,23 @@ open_weather_token = ''
 # DB Imports
 from .models import Modis
 
+# DS Logic imports
+import pandas as pd
+import numpy as np
+from math import radians, cos, sin, asin, sqrt
+
 
 # Functions 
 
 # MODIS Functions
-def pull_modis(url=modis_url):
+def pull_modis():
     """
     Get latest modis data.
     """
     print("pulling modus - sleep for 1")
     time.sleep(1)
 
+    url = "https://firms.modaps.eosdis.nasa.gov/data/active_fire/c6/csv/MODIS_C6_USA_contiguous_and_Hawaii_24h.csv"
     df = pd.read_csv(url, sep=",")
     print("got dataframe ", df.shape)
     return df

@@ -39,19 +39,25 @@ def create_app():
     # initialize the api wrapper
     api = Api(app)
 
-    @app.route("/create_db", methods=["POST"])
-    def create_db():
+    @app.route("/instantiate_db", methods=["POST"])
+    def instantiate_db():
         values = request.get_json()
         # expecting a json {'reset' : True, 'password' : 'ballderdash'}
 
-        if values["reset"] == True and values["password"] == "ballderdash":
-            print("creating db")
+        time_now = datetime.datetime.now()
+        for key, item in values.items():
+            print(key, type(item), item)
+
+        if values["reset"] == 1 and values["password"] == 55689:
+            print('dropping db')
+            db.drop_all()
+            print('db dropped')
             db.create_all()
+            print('db created')
 
             return jsonify(
                 {"error": False, "message": "db created successfully", "time": time_now}
             )
-
         else:
             return jsonify(
                 {

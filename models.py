@@ -27,7 +27,7 @@ class Modis(db.Model):
         {}, {}>""".format(self.latitude, self.longitude, 
         self.fire, self.timest)
 
-class Weather_Curr(db.Model):
+""" class Weather_Curr(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     latitude = db.Column(db.VARCHAR(7))
     longitude = db.Column(db.VARCHAR(7))
@@ -46,4 +46,4 @@ class Weather_Curr(db.Model):
 
 class FIRMS(db.Model): 
     def __repr__(self):
-        return("< {}>".format(self))
+        return("< {}>".format(self)) """
