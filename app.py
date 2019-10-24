@@ -79,23 +79,16 @@ def create_app():
 
     @app.route("/instantiate_db", methods=["GET"])
     def instantiate_db():
-            print('dropping db')
-            db.drop_all()
-            print('db dropped')
-            db.create_all()
-            print('db created')
+        time_now = datetime.datetime.now()
+        print('dropping db')
+        db.drop_all()
+        print('db dropped')
+        db.create_all()
+        print('db created')
 
-            return jsonify(
-                {"error": False, "message": "db created successfully", "time": time_now}
-            )
-        else:
-            return jsonify(
-                {
-                    "error": True,
-                    "message": "either auth failed or reset was not enabled",
-                    "time": time_now,
-                }
-            )
+        return jsonify(
+            {"error": False, "message": "db created successfully", "time": time_now}
+        )
 
     
     @app.route("/update_db", methods=["GET"])
