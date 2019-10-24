@@ -77,7 +77,11 @@ def create_app():
             ) """
 
 
-    @app.route("/instantiate_db", methods=["GET"])
+        @app.route("/", methods=["GET"])
+        def hello_world():
+            print('hello world!')
+
+"""     @app.route("/instantiate_db", methods=["GET"])
     def instantiate_db():
         time_now = datetime.datetime.now()
         print('dropping db')
@@ -88,10 +92,10 @@ def create_app():
 
         return jsonify(
             {"error": False, "message": "db created successfully", "time": time_now}
-        )
+        ) """
 
     
-    @app.route("/update_db", methods=["GET"])
+"""     @app.route("/update_db", methods=["GET"])
     def update_db():
         try:
             # Get new data and clean it
@@ -102,7 +106,7 @@ def create_app():
             add_training_data(clean_data)
         
         except:
-            return jsonify({"error": True, "message": "something happened"})
+            return jsonify({"error": True, "message": "something happened"}) """
 
 
     return app
