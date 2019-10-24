@@ -42,13 +42,13 @@ def create_app():
     @app.route("/instantiate_db", methods=["POST"])
     def instantiate_db():
         values = request.get_json()
-        # expecting a json {'reset' : True, 'password' : 'ballderdash'}
+        # expecting a json {'reset' : "TRUE", 'password' : 'ballderdash'}
 
         time_now = datetime.datetime.now()
         for key, item in values.items():
             print(key, type(item), item)
 
-        if values["reset"] == 1 and values["password"] == 55689:
+        if values["reset"] == "TRUE" and values["password"] == 'ballderdash':
             print('dropping db')
             db.drop_all()
             print('db dropped')
