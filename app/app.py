@@ -50,7 +50,7 @@ def create_app():
 
     @app.route("/", methods=["GET"])
     def hello_world():
-        print('hello world!')
+        return 'hello world!'
 
     return app
 
