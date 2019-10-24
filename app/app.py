@@ -48,6 +48,12 @@ def create_app():
     # initialize the api wrapper
     api = Api(app)
 
+    @app.route("/", methods=["GET"])
+    def hello_world():
+        print('hello world!')
+
+    return app
+
 """     @app.route("/instantiate_db", methods=["POST"])
     def instantiate_db():
         values = request.get_json()
@@ -77,10 +83,6 @@ def create_app():
             ) """
 
 
-        @app.route("/", methods=["GET"])
-        def hello_world():
-            print('hello world!')
-
 """     @app.route("/instantiate_db", methods=["GET"])
     def instantiate_db():
         time_now = datetime.datetime.now()
@@ -108,8 +110,6 @@ def create_app():
         except:
             return jsonify({"error": True, "message": "something happened"}) """
 
-
-    return app
 
 
 
