@@ -8,7 +8,7 @@ nasa_lance_token = 'C751EA24-F34E-11E9-9D0F-ABF3207B60E0'
 open_weather_token = ''
 
 # DB Imports
-from .models import Modis
+from .models import Modis, db
 
 # DS Logic imports
 import pandas as pd
@@ -53,7 +53,7 @@ def process_live_data(original_df):
 
     return df
 
-def add_training_data(df):
+def add_training_data(df, db):
     print('adding training data')
 
     # Add data from df into array
